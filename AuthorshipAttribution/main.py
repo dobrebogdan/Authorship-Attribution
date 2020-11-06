@@ -2,11 +2,11 @@ import numpy as np
 from math import sqrt, fabs
 from scipy.stats import kendalltau
 from matplotlib import pyplot as plt
-from scipy.cluster.hierarchy import dendrogram, linkage
-from sklearn.datasets import load_iris
+from scipy.cluster.hierarchy import dendrogram
 from sklearn.cluster import AgglomerativeClustering
 from sklearn.metrics import pairwise_distances
 import nltk
+
 
 def pearson_coefficient(X, Y):
     x_mean = np.mean(X)
@@ -19,9 +19,11 @@ def pearson_coefficient(X, Y):
     r = r / (len(X))
     return fabs(r)
 
+
 def euclidean_distance(X, Y):
     r = pearson_coefficient(X, Y)
     return sqrt(2*(1-r))
+
 
 def spearman_rank_order(X, Y):
     sqsum = 0.0
@@ -31,6 +33,7 @@ def spearman_rank_order(X, Y):
     r = 1.0 - (6.0 / (n * (n * n - 1.0))) * sqsum
     return fabs(r)
 
+
 def spearman_footrule(X, Y):
     sqsum = 0.0
     n = 1.0 * len(X)
@@ -38,6 +41,7 @@ def spearman_footrule(X, Y):
         sqsum += fabs(X[i] - Y[i])
     r = 1.0 - 3.0 / (n * n - 1.0) * sqsum
     return r
+
 
 def get_PQ(X, Y):
     P = 0.0
@@ -51,6 +55,7 @@ def get_PQ(X, Y):
                 Q += 1
     return (P, Q)
 
+
 def gamma(X, Y):
     (P, Q) = get_PQ(X, Y)
     return fabs((P - Q) / (P + Q))
@@ -60,9 +65,6 @@ def gamma(X, Y):
 def tau(X, Y):
     return (1.0 - kendalltau(X,Y)[0])
 
-
-def get_affinity(X):
-    return pairwise_distances(X, metric=pearson_coefficient)
 
 def plot_dendrogram(model, **kwargs):
     # Create linkage matrix and then plot the dendrogram
@@ -86,22 +88,20 @@ def plot_dendrogram(model, **kwargs):
     dendrogram(linkage_matrix, **kwargs)
 
 
-
-
-def create_dendogram(X, titlesList):
-
+def create_dendrogram(X, titles_list):
+    # metric cam be replaced with any other of the ones defined above
     dists = pairwise_distances(X, X, metric=tau)
 
     # setting distance_threshold=0 ensures we compute the full tree.
     model = AgglomerativeClustering(distance_threshold=0, n_clusters=None, affinity='precomputed', linkage='complete')
 
     model = model.fit(dists)
-    print("Distances are: ")
-    print(dists)
+    # print("Distances are: ")
+    # print(dists)
 
     plt.title('Hierarchical Clustering Dendrogram')
     # plot the top three levels of the dendrogram
-    plot_dendrogram(model, truncate_mode='level', p=3, labels=titlesList, orientation='left')
+    plot_dendrogram(model, truncate_mode='level', p=3, labels=titles_list, orientation='left')
     plt.xlabel("Number of points in node (or index of point if no parenthesis).")
     plt.show()
 
@@ -110,7 +110,6 @@ def get_words_from_file(filename):
     with open(filename, "r") as f:
         text = f.read()
         tokens = nltk.word_tokenize(text)
-
         words = {}
 
         for token in tokens:
@@ -132,29 +131,28 @@ def get_function_word_rankings():
     for (word, cnt) in words.items():
         words_list.append((cnt, word))
     words_count = sorted(words_list, reverse=True)
-    top_words_counts = words_count[0:20]
+    top_words_counts = words_count[0:13]
     rank = 1
     for (_, word) in top_words_counts:
         function_words.append(word)
         function_words_ranking[word] = rank
         rank += 1
-    return (function_words, function_words_ranking)
+    return function_words, function_words_ranking
 
 
 (function_words, function_words_ranking) = get_function_word_rankings()
 
 X = []
-# 2 works of each of the following: Jane Austen, George Orwell and James Joycew
-titlesList = ["sense_and_sensibility",  "pride_and_prejudice", "1984",  "homage_to_catalonia", "dubliners", "artist_portrait"]
-for filename in titlesList:
+# 2 works of each of the following: Jane Austen, George Orwell, James Joycew and George Eliot
+titles_list = ["sense_and_sensibility", "pride_and_prejudice", "1984", "homage_to_catalonia", "dubliners", "artist_portrait", "silas_marner", "adam_bede"]
+for filename in titles_list:
     words = get_words_from_file(filename)
-
     words_list = []
     for (word, cnt) in words.items():
         words_list.append((cnt, word))
     words_count = sorted(words_list, reverse=True)
 
-    #print(words_count)
+    # print(words_count)
     # compute the function words if not already existing
 
     curr_ranking = [0] * len(function_words)
@@ -162,10 +160,10 @@ for filename in titlesList:
     for (_, word) in words_count:
         if word in function_words:
             curr_word_rank += 1
-            curr_ranking[int(function_words_ranking[word] - 1)] = curr_word_rank
-
+            poz = int(function_words_ranking[word] - 1)
+            curr_ranking[poz] = curr_word_rank
+    # print(filename)
+    # print(curr_ranking)
     X.append(curr_ranking)
 
-create_dendogram(np.array(X), titlesList)
-
-
+create_dendrogram(np.array(X), titles_list)
