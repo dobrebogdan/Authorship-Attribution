@@ -108,7 +108,9 @@ def create_dendrogram(X, titles_list):
 
 def get_words_from_files():
     titles_list = ["sense_and_sensibility", "pride_and_prejudice", "1984", "homage_to_catalonia", "dubliners",
-                   "artist_portrait", "felix_holt", "middlemarch", "jane_eyre", "shirley", "wuthering_heights", "agnes_gray", "tenant"]
+                   "artist_portrait", "felix_holt", "middlemarch", "jane_eyre", "shirley", "wuthering_heights",
+                   "agnes_gray", "tenant", "harry_potter_1", "harry_potter_2", "harry_potter_3", "harry_potter_4",
+                   "the_two_towers", "fellowship_of_the_rings", "the_return_of_the_king"]
     words = {}
     for filename in titles_list:
         with open(filename, "r") as f:
@@ -159,9 +161,12 @@ def get_function_word_rankings():
 (function_words, function_words_ranking) = get_function_word_rankings()
 
 X = []
-# 2 works of each of the following: Jane Austen, George Orwell, James Joycew, George Eliot, Charlotte Bronte and 1 work for Emily Bronte and 2 for Anne Bronte
+# 2 works of each of the following: Jane Austen, George Orwell, James Joycew, George Eliot,
+# Charlotte Bronte and 1 work for Emily Bronte and 2 for Anne Bronte, 4 for JK Rowling and 3 for John R. R. Tolkie
 titles_list = ["sense_and_sensibility", "pride_and_prejudice", "1984", "homage_to_catalonia", "dubliners",
-               "artist_portrait", "felix_holt", "middlemarch", "jane_eyre", "shirley", "wuthering_heights", "agnes_gray", "tenant"]
+               "artist_portrait", "felix_holt", "middlemarch", "jane_eyre", "shirley", "wuthering_heights",
+               "agnes_gray", "tenant", "harry_potter_1", "harry_potter_2", "harry_potter_3", "harry_potter_4",
+               "the_two_towers", "fellowship_of_the_rings", "the_return_of_the_king"]
 for filename in titles_list:
     words = get_words_from_file(filename)
     print(filename)
