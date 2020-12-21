@@ -1,0 +1,20 @@
+"Jane Austen 1" - Sense and Sensibility
+"Jane Austen 2" - Pride and Prejudice
+"George Orwell 1" - 1984
+"George Orwell 2" - Homage to Catalonia
+"James Joycew 1" - Dubliners
+"James Joycew 2" - A Portrait of the Artist as a Young Man
+"George Eliot 1" - Felix Holt, the Radical
+"George Eliot 2" - Middlemarch
+"Charlotte Bronte 1" - Jane Eyre
+"Charlotte Bronte 2" - Shirley
+"Emily Bronte" - Wuthering Heights
+"Anne Bronte 1" - Agnes Gray
+"Anne Bronte 2" - The Tenant of Wildfell Hall
+"JK Rowling 1" - Harry Potter and the Philosopher's Stone
+"JK Rowling 2" - Harry Potter and the Chamber of Secrets J. K. Rowling
+"JK Rowling 3" - Harry Potter and the Prisoner of Azkaban J. K. Rowling
+"JK Rowling 4" - Harry Potter and the Goblet of Fire
+"John R. R. Tolkie 1" - The Two Towers
+"John R. R. Tolkie 2" - The Fellowship of the Rings
+"John R. R. Tolkie 3" - The Return of the King

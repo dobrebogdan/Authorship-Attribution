@@ -88,7 +88,7 @@ def plot_dendrogram(model, **kwargs):
     dendrogram(linkage_matrix, **kwargs)
 
 
-def create_dendrogram(X, titles_list):
+def create_dendrogram(X, labels_list):
     # metric cam be replaced with any other of the ones defined above
     dists = pairwise_distances(X, X, metric=tau)
 
@@ -101,7 +101,7 @@ def create_dendrogram(X, titles_list):
 
     plt.title('Hierarchical Clustering Dendrogram')
     # plot the top three levels of the dendrogram
-    plot_dendrogram(model, truncate_mode='level', p=12, labels=titles_list, orientation='left')
+    plot_dendrogram(model, truncate_mode='level', p=12, labels=labels_list, orientation='left')
     plt.xlabel("Number of points in node (or index of point if no parenthesis).")
     plt.show()
 
@@ -167,10 +167,16 @@ titles_list = ["sense_and_sensibility", "pride_and_prejudice", "1984", "homage_t
                "artist_portrait", "felix_holt", "middlemarch", "jane_eyre", "shirley", "wuthering_heights",
                "agnes_gray", "tenant", "harry_potter_1", "harry_potter_2", "harry_potter_3", "harry_potter_4",
                "the_two_towers", "fellowship_of_the_rings", "the_return_of_the_king"]
+
+labels_list = ["Jane Austen 1", "Jane Austen 2", "George Orwell 1", "George Orwell 2", "James Joycew 1",
+               "James Joycew 2", "George Eliot 1", "George Eliot 2", "Charlotte Bronte 1", "Charlotte Bronte 2",
+               "Emily Bronte", "Anne Bronte 1", "Anne Bronte 2", "JK Rowling 1", "JK Rowling 2", "JK Rowling 3",
+               "JK Rowling 4", "John R. R. Tolkie 1", "John R. R. Tolkie 2", "John R. R. Tolkie 3"]
+
 for filename in titles_list:
     words = get_words_from_file(filename)
-    print(filename)
-    print(len(words))
+    # print(filename)
+    # print(len(words))
     words_list = []
     for (word, cnt) in words.items():
         words_list.append((cnt, word))
@@ -190,4 +196,4 @@ for filename in titles_list:
     # print(curr_ranking)
     X.append(curr_ranking)
 
-create_dendrogram(np.array(X), titles_list)
+create_dendrogram(np.array(X), labels_list)
