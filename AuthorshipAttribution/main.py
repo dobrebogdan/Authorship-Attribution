@@ -101,17 +101,33 @@ def create_dendrogram(X, titles_list):
 
     plt.title('Hierarchical Clustering Dendrogram')
     # plot the top three levels of the dendrogram
-    plot_dendrogram(model, truncate_mode='level', p=3, labels=titles_list, orientation='left')
+    plot_dendrogram(model, truncate_mode='level', p=12, labels=titles_list, orientation='left')
     plt.xlabel("Number of points in node (or index of point if no parenthesis).")
     plt.show()
 
+
+def get_words_from_files():
+    titles_list = ["sense_and_sensibility", "pride_and_prejudice", "1984", "homage_to_catalonia", "dubliners",
+                   "artist_portrait", "felix_holt", "middlemarch", "jane_eyre", "shirley", "wuthering_heights", "agnes_gray", "tenant"]
+    words = {}
+    for filename in titles_list:
+        with open(filename, "r") as f:
+            text = f.read()
+            tokens = nltk.word_tokenize(text)
+
+            for token in tokens:
+                if token in words.keys():
+                    words[token] = words[token] + 1
+                else:
+                    if len(token) > 1 and token[0].islower():
+                        words[token] = 1
+    return words
 
 def get_words_from_file(filename):
     with open(filename, "r") as f:
         text = f.read()
         tokens = nltk.word_tokenize(text)
         words = {}
-
         for token in tokens:
             if token in words.keys():
                 words[token] = words[token] + 1
@@ -124,13 +140,13 @@ def get_words_from_file(filename):
 def get_function_word_rankings():
     function_words = []
     function_words_ranking = {}
-    filename = "dubliners"
-    words = get_words_from_file(filename)
+    words = get_words_from_files()
 
     words_list = []
     for (word, cnt) in words.items():
         words_list.append((cnt, word))
     words_count = sorted(words_list, reverse=True)
+    # 13
     top_words_counts = words_count[0:13]
     rank = 1
     for (_, word) in top_words_counts:
@@ -143,10 +159,13 @@ def get_function_word_rankings():
 (function_words, function_words_ranking) = get_function_word_rankings()
 
 X = []
-# 2 works of each of the following: Jane Austen, George Orwell, James Joycew and George Eliot
-titles_list = ["sense_and_sensibility", "pride_and_prejudice", "1984", "homage_to_catalonia", "dubliners", "artist_portrait", "silas_marner", "adam_bede"]
+# 2 works of each of the following: Jane Austen, George Orwell, James Joycew, George Eliot, Charlotte Bronte and 1 work for Emily Bronte and 2 for Anne Bronte
+titles_list = ["sense_and_sensibility", "pride_and_prejudice", "1984", "homage_to_catalonia", "dubliners",
+               "artist_portrait", "felix_holt", "middlemarch", "jane_eyre", "shirley", "wuthering_heights", "agnes_gray", "tenant"]
 for filename in titles_list:
     words = get_words_from_file(filename)
+    print(filename)
+    print(len(words))
     words_list = []
     for (word, cnt) in words.items():
         words_list.append((cnt, word))
