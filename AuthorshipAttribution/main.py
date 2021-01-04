@@ -102,7 +102,7 @@ def create_dendrogram(X, labels_list):
     plt.title('Hierarchical Clustering Dendrogram')
     # plot the top three levels of the dendrogram
     plot_dendrogram(model, truncate_mode='level', p=12, labels=labels_list, orientation='left')
-    plt.xlabel("Number of points in node (or index of point if no parenthesis).")
+    plt.xlabel("")
     plt.show()
 
 
