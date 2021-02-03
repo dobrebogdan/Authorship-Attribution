@@ -90,7 +90,7 @@ def plot_dendrogram(model, **kwargs):
 
 def create_dendrogram(X, labels_list):
     # metric cam be replaced with any other of the ones defined above
-    dists = pairwise_distances(X, X, metric=kendalltau)
+    dists = pairwise_distances(X, X, metric=tau)
 
     # setting distance_threshold=0 ensures we compute the full tree.
     model = AgglomerativeClustering(distance_threshold=0, n_clusters=None, affinity='precomputed', linkage='complete')
@@ -99,7 +99,7 @@ def create_dendrogram(X, labels_list):
     # print("Distances are: ")
     # print(dists)
 
-    plt.title("Hierarchical Clustering")
+    plt.title('Hierarchical Clustering')
     # plot the top three levels of the dendrogram
     plot_dendrogram(model, truncate_mode='level', p=12, labels=labels_list, orientation='left')
     plt.xlabel("")
@@ -116,6 +116,7 @@ def get_words_from_files():
         with open(filename, "r") as f:
             text = f.read()
             tokens = nltk.word_tokenize(text)
+
             for token in tokens:
                 if token in words.keys():
                     words[token] = words[token] + 1
@@ -154,7 +155,6 @@ def get_function_word_rankings():
         function_words.append(word)
         function_words_ranking[word] = rank
         rank += 1
-    print(function_words)
     return function_words, function_words_ranking
 
 
